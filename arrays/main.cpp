@@ -1,71 +1,31 @@
 #include <iostream>
-#include <cassert>
-
-class IndexOutOfBoundsException : public std::exception {};
-
-class IntArray {
-    private:
-        int * m_ptr{nullptr};
-        int m_size{0};
-
-    public:
-        IntArray() = default;
-
-        explicit IntArray(int size) {
-            if (size != 0) {
-                m_ptr = new int [size]{};
-                m_size = size;
-            }
-        }
-
-        ~IntArray() {
-            delete[] m_ptr;
-        }
-
-        [[nodiscard]] int Size() const {
-            return m_size;
-        };
-
-        [[nodiscard]] bool IsEmpty() const {
-            return (m_size == 0);
-        }
-
-        [[nodiscard]] bool IsValidIndex(int index) const {
-            return (index >= 0) && (index < m_size);
-        }
-
-        int& operator[] (int index) {
-            if (!IsValidIndex(index)) {
-                throw IndexOutOfBoundsException{};
-            }
-            return m_ptr[index];
-        }
-
-        int operator[] (int index) const {
-            if (!IsValidIndex(index)) {
-                throw IndexOutOfBoundsException{};
-            }
-            return m_ptr[index];
-        }
-};
+#include "Array.h"
 
 int main() {
-    IntArray a{};
+    Array<int> a{};
     assert(a.IsEmpty());
 
-    IntArray b{10};
+    Array<int> b{10};
     assert(!b.IsEmpty());
 
-    IntArray c{3};
+    Array<int> c{3};
     c[0] = 10;
+    c[1] = 20;
+    c[2] = 0;
 
     std::cout << c[0] << std::endl;
 
     try {
         c[4];
     } catch (const IndexOutOfBoundsException& e) {
-        std::cout << "Index out of bounds exception";
+        std::cout << "Index out of bounds exception" << std::endl;
     }
+
+    Array<int> d = c;
+    d[0] = 20;
+
+    std::cout << "c: " << c << std::endl;
+    std::cout << "d: " << d << std::endl;
 
     return 0;
 }
