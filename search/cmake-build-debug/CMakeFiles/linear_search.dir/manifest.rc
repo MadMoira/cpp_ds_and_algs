@@ -1,0 +1,2 @@
+#pragma code_page(65001)
+1 /* CREATEPROCESS_MANIFEST_RESOURCE_ID */ 24 /* RT_MANIFEST */ "F:/code/cpp-ds-and-algs/linear_search/cmake-build-debug/CMakeFiles/linear_search.dir/embed.manifest"
